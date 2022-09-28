@@ -45,5 +45,7 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port} ${process.env.DATABASE_URL}`);
+  console.log(`Server is running on port ${port} 
+  \nhttp://localhost:${port}
+  \n${process.env.DATABASE_URL}`);
 });

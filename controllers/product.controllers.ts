@@ -6,23 +6,36 @@ export async function createProduct(req: Request, res: Response) {
   try {
     const productInput: Prisma.ProductsCreateInput = {
       name: req.body.name,
-      price: req.body.price,
       desc: req.body.description,
-      category: req.body.category,
-      auther: req.body.auther,
-      publisher: req.body.publisher,
-      stock: req.body.stock,
-      stockAlm: req.body.stockAlm,
+      price: req.body.price,
       cost: req.body.cost,
-      amountpage: req.body.amountpage,
+      amountpage: Number(req.body.amountpage),
+      stock: Number(req.body.stock),
+      stockAlm: Number(req.body.stockAlm),
       discount: req.body.discount,
+      category: {
+        connect: {
+          id: req.body.category,
+        },
+      },
+      auther: {
+        connect: {
+          id: req.body.auther,
+        },
+      },
+      publisher: {
+        connect: {
+          id: req.body.publisher,
+        },
+      },
     };
     const product = await prisma.products.create({
       data: productInput,
     });
     res.json(product);
   } catch (error) {
-    res.status(400).json(error);
+    console.log(error);
+    res.status(400).json({ error });
   }
 }
 
@@ -50,6 +63,9 @@ export async function getProducts(req: Request, res: Response) {
             address: true,
           },
         },
+      },
+      where: {
+        isDelete: false,
       },
     });
     res.json(allBooks);
@@ -120,6 +136,23 @@ export async function updateProduct(req: Request, res: Response) {
 }
 
 export async function deleteProduct(req: Request, res: Response) {
+  try {
+    const product = await prisma.products.update({
+      where: {
+        // @ts-ignore
+        id: String(req.params.id),
+      },
+      data: {
+        isDelete: true,
+      },
+    });
+    res.json(product);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+export async function destroyProduct(req: Request, res: Response) {
   try {
     const product = await prisma.products.delete({
       where: {
