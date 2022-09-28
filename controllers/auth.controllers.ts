@@ -3,10 +3,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function login(req: Request, res: Response) {
-  try {
-    const user = await prisma.user.findMany({});
-    res.json(user);
-  } catch (error) {}
-}
+  // try {
+  //   const user = await prisma.user.findMany({
+  //     where: {
+  //       name: "somcha",
+  //     },
+  //   });
 
+  //   res.json(user);
+  // } catch (error) {}
+}
 export default { login };

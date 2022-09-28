@@ -10,26 +10,114 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
-  role      Role     @default(USER)
-  posts     Post[]
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  published Boolean  @default(false)
-  title     String   @db.VarChar(255)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
-}
-
 enum Role {
   USER
   ADMIN
+}
+
+model User {
+  username  String   @unique
+  fname     String
+  lastname  String
+  tel       String?
+  email     String   @unique
+  password  String
+  points    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @default(USER)
+  Order     Order[]
+  Cart      Cart[]
+}
+
+model Products {
+  id         String         @id @default(uuid())
+  name       String
+  desc       String
+  amountpage Int
+  discount   Decimal  @db.Decimal(10,2)
+  price      Decimal  @db.Decimal(10,2)
+  cost       Decimal  @db.Decimal(10,2)     @default(0)
+  stock      Int
+  stockAlm   Int         @default(0)
+  category   Category[]
+  auther     Auther[]
+  publisher  Publisher[]
+  image      ImageBook[]
+  OrderItem  OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  Cart       Cart[]
+}
+
+model Category {
+  id         String       @id @default(uuid())
+  name       String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+}
+
+model ImageBook {
+  id         String       @id @default(uuid())
+  url        String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+}
+
+model Order {
+  id         String         @id @default(uuid())
+  status     String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  productsId String?
+  User       User?       @relation(fields: [userId], references: [username])
+  userId     String?
+  OrderItem  OrderItem[]
+}
+
+model OrderItem {
+  id         String       @id @default(uuid())
+  amount     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Order      Order?    @relation(fields: [orderId], references: [id])
+  orderId    String?
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+}
+
+model Auther {
+  id         String       @id @default(uuid())
+  name       String
+  email      String
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Publisher {
+  id         String       @id @default(uuid())
+  name       String
+  address    String
+  tel        String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+}
+
+model Cart {
+  id         String       @id @default(uuid())
+  amount     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+  User       User?     @relation(fields: [userId], references: [username])
+  userId     String?
 }
