@@ -31,36 +31,40 @@ model User {
 }
 
 model Products {
-  id         String         @id @default(uuid())
-  name       String
-  desc       String
-  amountpage Int
-  discount   Decimal  @db.Decimal(10,2)
-  price      Decimal  @db.Decimal(10,2)
-  cost       Decimal  @db.Decimal(10,2)     @default(0)
-  stock      Int
-  stockAlm   Int         @default(0)
-  category   Category[]
-  auther     Auther[]
-  publisher  Publisher[]
-  image      ImageBook[]
-  OrderItem  OrderItem[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  Cart       Cart[]
+  id          String      @id @default(uuid())
+  name        String
+  desc        String
+  amountpage  Int
+  discount    Decimal     @db.Decimal(10, 2)
+  price       Decimal     @db.Decimal(10, 2)
+  cost        Decimal     @default(0) @db.Decimal(10, 2)
+  stock       Int
+  stockAlm    Int         @default(0)
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  auther      Auther?     @relation(fields: [autherId], references: [id])
+  autherId    String?
+  publisher   Publisher?  @relation(fields: [publisherId], references: [id])
+  publisherId String?
+  image       ImageBook[]
+  OrderItem   OrderItem?  @relation(fields: [orderItemId], references: [id])
+  orderItemId String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  Cart        Cart[]
 }
 
 model Category {
-  id         String       @id @default(uuid())
+  id         String     @id @default(uuid())
   name       String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Products   Products? @relation(fields: [productsId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Products   Products[]
   productsId String?
 }
 
 model ImageBook {
-  id         String       @id @default(uuid())
+  id         String    @id @default(uuid())
   url        String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
@@ -69,7 +73,7 @@ model ImageBook {
 }
 
 model Order {
-  id         String         @id @default(uuid())
+  id         String      @id @default(uuid())
   status     String
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
@@ -80,39 +84,38 @@ model Order {
 }
 
 model OrderItem {
-  id         String       @id @default(uuid())
+  id         String     @id @default(uuid())
   amount     Int
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Order      Order?    @relation(fields: [orderId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Order      Order?     @relation(fields: [orderId], references: [id])
   orderId    String?
-  Products   Products? @relation(fields: [productsId], references: [id])
+  Products   Products[]
   productsId String?
 }
 
 model Auther {
-  id         String       @id @default(uuid())
-  name       String
-  email      String
-  Products   Products? @relation(fields: [productsId], references: [id])
-  productsId String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id        String     @id @default(uuid())
+  name      String
+  email     String
+  Products  Products[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Publisher {
-  id         String       @id @default(uuid())
+  id         String     @id @default(uuid())
   name       String
   address    String
   tel        String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Products   Products? @relation(fields: [productsId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Products   Products[]
   productsId String?
 }
 
 model Cart {
-  id         String       @id @default(uuid())
+  id         String    @id @default(uuid())
   amount     Int
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt

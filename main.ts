@@ -17,8 +17,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", router);
 
 app.get("/", async (req: Request, res: Response) => {
-  // res.send("Hello World!");
-  const allBooks = await prisma.products.findMany();
+  const allBooks = await prisma.products.findMany({
+    include: {
+      category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      auther: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      publisher: {
+        select: {
+          id: true,
+          name: true,
+          address: true,
+        },
+      },
+    },
+  });
   res.json(allBooks);
 });
 
