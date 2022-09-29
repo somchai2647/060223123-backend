@@ -22,7 +22,18 @@ export async function getCategorys(req: Request, res: Response) {
     const withproduct = req.query.withproduct;
     const category = await prisma.category.findMany({
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(category);
@@ -40,7 +51,18 @@ export async function getCategory(req: Request, res: Response) {
         id: String(req.params.id),
       },
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(category);
