@@ -19,10 +19,10 @@ export async function createCategory(req: Request, res: Response) {
 
 export async function getCategorys(req: Request, res: Response) {
   try {
-    const withProduct = req.query.withProduct;
+    const withproduct = req.query.withproduct;
     const category = await prisma.category.findMany({
       include: {
-        Products: withProduct === "1" ? true : false,
+        Products: withproduct === "1" ? true : false,
       },
     });
     res.json(category);
@@ -33,14 +33,14 @@ export async function getCategorys(req: Request, res: Response) {
 
 export async function getCategory(req: Request, res: Response) {
   try {
-    const withProduct = req.query.withProduct;
+    const withproduct = req.query.withproduct;
     const category = await prisma.category.findUnique({
       where: {
         // @ts-ignore
         id: String(req.params.id),
       },
       include: {
-        Products: withProduct === "1" ? true : false,
+        Products: withproduct === "1" ? true : false,
       },
     });
     res.json(category);

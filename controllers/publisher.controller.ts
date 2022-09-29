@@ -2,41 +2,42 @@ import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function createAuther(req: Request, res: Response) {
+export async function createPublisher(req: Request, res: Response) {
   try {
-    const autherInput: Prisma.AutherCreateInput = {
+    const publisherInput: Prisma.PublisherCreateInput = {
       name: req.body.name,
-      email: req.body.email,
+      address: req.body.address,
+      tel: req.body.tel,
     };
-    const auther = await prisma.auther.create({
-      data: autherInput,
+    const publisher = await prisma.publisher.create({
+      data: publisherInput,
     });
-    res.json(auther);
+    res.json(publisher);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });
   }
 }
 
-export async function getAuthers(req: Request, res: Response) {
+export async function getPublishers(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
-    
-    const auther = await prisma.auther.findMany({
+
+    const publisher = await prisma.publisher.findMany({
       include: {
         Products: withproduct === "1" ? true : false,
       },
     });
-    res.json(auther);
+    res.json(publisher);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function getAuther(req: Request, res: Response) {
+export async function getPublisher(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
-    const auther = await prisma.auther.findUnique({
+    const publisher = await prisma.publisher.findUnique({
       where: {
         // @ts-ignore
         id: String(req.params.id),
@@ -45,47 +46,47 @@ export async function getAuther(req: Request, res: Response) {
         Products: withproduct === "1" ? true : false,
       },
     });
-    res.json(auther);
+    res.json(publisher);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function updateAuther(req: Request, res: Response) {
+export async function updatePublisher(req: Request, res: Response) {
   try {
-    const auther = await prisma.auther.update({
+    const publisher = await prisma.publisher.update({
       where: {
         // @ts-ignore
         id: String(req.params.id),
       },
       data: {
-        name: req.body.name,
-        email: req.body.email,
+        address: req.body.address,
+        tel: req.body.tel,
       },
     });
-    res.json(auther);
+    res.json(publisher);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function destroyAuther(req: Request, res: Response) {
+export async function destroyPublisher(req: Request, res: Response) {
   try {
-    const auther = await prisma.auther.delete({
+    const publisher = await prisma.publisher.delete({
       where: {
         // @ts-ignore
         id: String(req.params.id),
       },
     });
-    res.json(auther);
+    res.json(publisher);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-// export async function deleteProduct(req: Request, res: Response) {
+// export async function deletePublisher(req: Request, res: Response) {
 //     try {
-//       const product = await prisma.products.update({
+//       const publisher = await prisma.publishers.update({
 //         where: {
 //           // @ts-ignore
 //           id: String(req.params.id),
