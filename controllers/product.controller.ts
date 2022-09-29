@@ -43,6 +43,11 @@ export async function getProducts(req: Request, res: Response) {
   try {
     const allBooks = await prisma.products.findMany({
       include: {
+        image: {
+          select: {
+            url: true,
+          },
+        },
         category: {
           select: {
             id: true,
@@ -82,6 +87,11 @@ export async function getProduct(req: Request, res: Response) {
         id: String(req.params.id),
       },
       include: {
+        image: {
+          select: {
+            url: true,
+          },
+        },
         category: {
           select: {
             id: true,
@@ -158,6 +168,11 @@ export async function destroyProduct(req: Request, res: Response) {
       where: {
         // @ts-ignore
         id: String(req.params.id),
+      },
+    });
+    await prisma.imageBook.deleteMany({
+      where: {
+        productsId: product.id,
       },
     });
     res.json(product);
