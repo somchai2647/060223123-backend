@@ -12,6 +12,6 @@ router.post("/createPublisher", createPublisher);
 router.get("/getPublisher", getPublishers);
 router.get("/getPublisher/:id", getPublisher);
 router.put("/updatePublisher/:id", updatePublisher);
-router.delete("/destroy/:id", destroyPublisher);
+router.delete("/destroyPublisher/:id", destroyPublisher);
 
 export default router;

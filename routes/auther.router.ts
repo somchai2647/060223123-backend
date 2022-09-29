@@ -12,6 +12,6 @@ router.post("/createAuther", createAuther);
 router.get("/getAuther", getAuthers);
 router.get("/getAuther/:id", getAuther);
 router.put("/updateAuther/:id", updateAuther);
-router.delete("/destroy/:id", destroyAuther);
+router.delete("/destroyAuther/:id", destroyAuther);
 
 export default router;

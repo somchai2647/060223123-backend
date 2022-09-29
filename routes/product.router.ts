@@ -14,6 +14,6 @@ router.get("/getProduct", getProducts);
 router.get("/getProduct/:id", getProduct);
 router.put("/updateProduct/:id", updateProduct);
 router.delete("/deleteProduct/:id", deleteProduct);
-router.delete("/destroy/:id", destroyProduct);
+router.delete("/destroyProduct/:id", destroyProduct);
 
 export default router;

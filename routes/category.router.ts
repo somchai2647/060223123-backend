@@ -12,6 +12,6 @@ router.post("/createCategory", createCategory);
 router.get("/getCategory", getCategorys);
 router.get("/getCategory/:id", getCategory);
 router.put("/updateCategory/:id", updateCategory);
-router.delete("/destroy/:id", destroyCategory);
+router.delete("/destroyCategory/:id", destroyCategory);
 
 export default router;

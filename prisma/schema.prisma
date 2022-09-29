@@ -62,7 +62,6 @@ model Category {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   Products   Products[]
-  productsId String?
 }
 
 model ImageBook {
@@ -113,7 +112,6 @@ model Publisher {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   Products   Products[]
-  productsId String?
 }
 
 model Cart {
