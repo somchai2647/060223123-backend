@@ -20,7 +20,6 @@ export async function createCategory(req: Request, res: Response) {
 export async function getCategorys(req: Request, res: Response) {
   try {
     const withProduct = req.query.withProduct;
-    console.log(withProduct);
     const category = await prisma.category.findMany({
       include: {
         Products: withProduct === "1" ? true : false,
