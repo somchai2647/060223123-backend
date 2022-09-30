@@ -27,7 +27,7 @@ export async function register(req: Request, res: Response) {
       const token = jwt.sign(
         { username: user.username, email: user.email },
         process.env.JWT_SECRET || "secret",
-        { expiresIn: "1d" }
+        { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
       );
 
       user.token = token;
@@ -59,7 +59,7 @@ export async function login(req: Request, res: Response) {
       const token = jwt.sign(
         { username: user.username, email: user.email },
         process.env.JWT_SECRET || "secret",
-        { expiresIn: "1d" }
+        { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
       );
 
       user.token = token;
