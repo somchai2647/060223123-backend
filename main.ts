@@ -17,31 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", router);
 
 app.get("/", async (req: Request, res: Response) => {
-  const allBooks = await prisma.products.findMany({
-    include: {
-      category: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      auther: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      },
-      publisher: {
-        select: {
-          id: true,
-          name: true,
-          address: true,
-        },
-      },
-    },
+  res.json({
+    status: "server is running",
   });
-  res.json(allBooks);
 });
 
 app.listen(port, () => {

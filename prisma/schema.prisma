@@ -18,10 +18,11 @@ enum Role {
 model User {
   username  String   @unique
   fname     String
-  lastname  String
+  lname  String
   tel       String?
   email     String   @unique
   password  String
+  token     String?
   points    Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -57,11 +58,11 @@ model Products {
 }
 
 model Category {
-  id         String     @id @default(uuid())
-  name       String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  Products   Products[]
+  id        String     @id @default(uuid())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Products  Products[]
 }
 
 model ImageBook {
@@ -105,13 +106,13 @@ model Auther {
 }
 
 model Publisher {
-  id         String     @id @default(uuid())
-  name       String
-  address    String
-  tel        String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  Products   Products[]
+  id        String     @id @default(uuid())
+  name      String
+  address   String
+  tel       String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Products  Products[]
 }
 
 model Cart {
