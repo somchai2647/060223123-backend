@@ -1,7 +1,7 @@
-****.env
+****env
 ```
 DATABASE_URL
-JWT_SECRET=
+JWT_SECRET
 JWT_EXPIRES_IN
 PORT
 ```
