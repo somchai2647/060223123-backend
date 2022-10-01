@@ -11,7 +11,7 @@ const router = Router();
 
 router.use("/auth", auth);
 
-router.use(verifyToken);
+// router.use(verifyToken);
 router.use("/product", product);
 router.use("/category", category);
 router.use("/auther", auther);

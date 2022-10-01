@@ -20,7 +20,11 @@ export async function createCategory(req: Request, res: Response) {
 export async function getCategorys(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
+    const order = req.query.order;
     const category = await prisma.category.findMany({
+      orderBy: {
+        name: order === "desc" ? "desc" : "asc",
+      },
       include: {
         Products:
           withproduct === "1"

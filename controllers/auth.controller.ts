@@ -63,6 +63,8 @@ export async function login(req: Request, res: Response) {
       );
 
       user.token = token;
+      //@ts-ignore
+      delete user.password;
 
       res.json(user);
     } else {
