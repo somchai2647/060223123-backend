@@ -15,7 +15,7 @@ export function auth(req: Request, res: Response, next: NextFunction) {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(400).json({ msg: "Token ไม่ถูกต้อง" });
+    res.status(400).json({ msg: "Token ไม่ถูกต้อง หรือ หมดอายุ" });
   }
 }
 
