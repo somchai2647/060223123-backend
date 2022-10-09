@@ -2,41 +2,41 @@ import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function createAuther(req: Request, res: Response) {
+export async function createAuthor(req: Request, res: Response) {
   try {
-    const autherInput: Prisma.AutherCreateInput = {
+    const authorInput: Prisma.AuthorCreateInput = {
       name: req.body.name,
       email: req.body.email,
     };
-    const auther = await prisma.auther.create({
-      data: autherInput,
+    const author = await prisma.author.create({
+      data: authorInput,
     });
-    res.json(auther);
+    res.json(author);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });
   }
 }
 
-export async function getAuthers(req: Request, res: Response) {
+export async function getAuthors(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
     
-    const auther = await prisma.auther.findMany({
+    const author = await prisma.author.findMany({
       include: {
         Products: withproduct === "1" ? true : false,
       },
     });
-    res.json(auther);
+    res.json(author);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function getAuther(req: Request, res: Response) {
+export async function getAuthor(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
-    const auther = await prisma.auther.findUnique({
+    const author = await prisma.author.findUnique({
       where: {
         // @ts-ignore
         id: String(req.params.id),
@@ -45,15 +45,15 @@ export async function getAuther(req: Request, res: Response) {
         Products: withproduct === "1" ? true : false,
       },
     });
-    res.json(auther);
+    res.json(author);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function updateAuther(req: Request, res: Response) {
+export async function updateAuthor(req: Request, res: Response) {
   try {
-    const auther = await prisma.auther.update({
+    const author = await prisma.author.update({
       where: {
         // @ts-ignore
         id: String(req.params.id),
@@ -63,21 +63,21 @@ export async function updateAuther(req: Request, res: Response) {
         email: req.body.email,
       },
     });
-    res.json(auther);
+    res.json(author);
   } catch (error) {
     res.status(400).json(error);
   }
 }
 
-export async function destroyAuther(req: Request, res: Response) {
+export async function destroyAuthor(req: Request, res: Response) {
   try {
-    const auther = await prisma.auther.delete({
+    const author = await prisma.author.delete({
       where: {
         // @ts-ignore
         id: String(req.params.id),
       },
     });
-    res.json(auther);
+    res.json(author);
   } catch (error) {
     res.status(400).json(error);
   }

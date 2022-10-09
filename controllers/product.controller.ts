@@ -18,9 +18,9 @@ export async function createProduct(req: Request, res: Response) {
           id: req.body.category,
         },
       },
-      auther: {
+      author: {
         connect: {
-          id: req.body.auther,
+          id: req.body.author,
         },
       },
       publisher: {
@@ -54,7 +54,7 @@ export async function getProducts(req: Request, res: Response) {
             name: true,
           },
         },
-        auther: {
+        author: {
           select: {
             id: true,
             name: true,
@@ -98,7 +98,7 @@ export async function getProduct(req: Request, res: Response) {
             name: true,
           },
         },
-        auther: {
+        author: {
           select: {
             id: true,
             name: true,
@@ -132,7 +132,7 @@ export async function updateProduct(req: Request, res: Response) {
         price: req.body.price,
         desc: req.body.description,
         category: req.body.category_id,
-        auther: req.body.auther_id,
+        author: req.body.author_id,
         publisher: req.body.publisher_id,
         stock: req.body.stock,
         stockAlm: req.body.stockAlm,

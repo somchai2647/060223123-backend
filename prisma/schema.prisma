@@ -44,8 +44,8 @@ model Products {
   stockAlm    Int         @default(0)
   category    Category?   @relation(fields: [categoryId], references: [id])
   categoryId  String?
-  auther      Auther?     @relation(fields: [autherId], references: [id])
-  autherId    String?
+  author      Author?     @relation(fields: [authorId], references: [id])
+  authorId    String?
   publisher   Publisher?  @relation(fields: [publisherId], references: [id])
   publisherId String?
   image       ImageBook[]
@@ -97,7 +97,7 @@ model OrderItem {
   productsId String?
 }
 
-model Auther {
+model Author {
   id        String     @id @default(uuid())
   name      String
   email     String
