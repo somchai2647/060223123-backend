@@ -6,13 +6,13 @@ export async function createProduct(req: Request, res: Response) {
   try {
     const productInput: Prisma.ProductsCreateInput = {
       name: req.body.name,
-      desc: req.body.description,
+      desc: req.body.desc,
       price: req.body.price,
       cost: req.body.cost,
       amountpage: Number(req.body.amountpage),
       stock: Number(req.body.stock),
       stockAlm: Number(req.body.stockAlm),
-      discount: req.body.discount,
+      discount: Number(req.body.discount),
       category: {
         connect: {
           id: req.body.category,
