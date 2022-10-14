@@ -31,6 +31,28 @@ export async function createProduct(req: Request, res: Response) {
     };
     const product = await prisma.products.create({
       data: productInput,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        publisher: {
+          select: {
+            id: true,
+            name: true,
+            address: true,
+          },
+        },
+      },
     });
     res.json(product);
   } catch (error) {
@@ -149,6 +171,7 @@ export async function updateProduct(req: Request, res: Response) {
         stock: req.body.stock,
         stockAlm: req.body.stockAlm,
         cost: req.body.cost,
+        discount: req.body.discount,
       },
     });
     res.json(product);
