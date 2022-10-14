@@ -173,6 +173,28 @@ export async function updateProduct(req: Request, res: Response) {
         cost: req.body.cost,
         discount: req.body.discount,
       },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        publisher: {
+          select: {
+            id: true,
+            name: true,
+            address: true,
+          },
+        },
+      },
     });
     res.json(product);
   } catch (error) {
