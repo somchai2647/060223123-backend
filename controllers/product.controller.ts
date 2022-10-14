@@ -131,9 +131,21 @@ export async function updateProduct(req: Request, res: Response) {
         name: req.body.name,
         price: req.body.price,
         desc: req.body.description,
-        category: req.body.category_id,
-        author: req.body.author_id,
-        publisher: req.body.publisher_id,
+        category: {
+          connect: {
+            id: req.body.category,
+          },
+        },
+        author: {
+          connect: {
+            id: req.body.author,
+          },
+        },
+        publisher: {
+          connect: {
+            id: req.body.publisher,
+          },
+        },
         stock: req.body.stock,
         stockAlm: req.body.stockAlm,
         cost: req.body.cost,
