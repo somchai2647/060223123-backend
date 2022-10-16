@@ -60,6 +60,7 @@ export async function updatePublisher(req: Request, res: Response) {
         id: String(req.params.id),
       },
       data: {
+        name: req.body.name,
         address: req.body.address,
         tel: req.body.tel,
       },
