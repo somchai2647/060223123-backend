@@ -23,7 +23,7 @@ export async function getCategorys(req: Request, res: Response) {
     const order = req.query.order;
     const category = await prisma.category.findMany({
       orderBy: {
-        name: order === "desc" ? "desc" : "asc",
+        createdAt: order === "desc" ? "desc" : "asc",
       },
       include: {
         Products:
