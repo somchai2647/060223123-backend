@@ -204,6 +204,15 @@ export async function updateProduct(req: Request, res: Response) {
         discount: req.body.discount,
       },
       include: {
+        image: {
+          orderBy: {
+            type: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
         category: {
           select: {
             id: true,
@@ -226,9 +235,34 @@ export async function updateProduct(req: Request, res: Response) {
         },
       },
     });
+    const coverNew = {
+      url: req.body.cover,
+      type: "COVER",
+      productsId: product.id,
+    };
+    const imagesNew = req.body.imagebook.map(
+      (pic: Prisma.ImageBookCreateInput) => {
+        return { url: pic.url, type: "OTHER", productsId: product.id };
+      }
+    );
+    await prisma.imageBook.deleteMany({
+      where: {
+        // @ts-ignore
+        productsId: String(product.id),
+      },
+    });
+    await prisma.imageBook.createMany({
+      data: [coverNew, ...imagesNew],
+      // @ts-ignore
+      skipDuplicates: true,
+    });
+
+    product.image = [coverNew, ...imagesNew];
+
     res.json(product);
   } catch (error) {
     res.status(400).json(error);
+    console.error(error);
   }
 }
 
