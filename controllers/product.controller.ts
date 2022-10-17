@@ -248,21 +248,20 @@ export async function updateProduct(req: Request, res: Response) {
     await prisma.imageBook.deleteMany({
       where: {
         // @ts-ignore
-        productsId: String(product.id),
+        productsId: String(product.id),        
       },
     });
-    await prisma.imageBook.createMany({
+    const images = await prisma.imageBook.createMany({
       data: [coverNew, ...imagesNew],
       // @ts-ignore
       skipDuplicates: true,
     });
-
-    product.image = [coverNew, ...imagesNew];
+    product.image = [coverNew, ...imagesNew]
 
     res.json(product);
   } catch (error) {
     res.status(400).json(error);
-    console.error(error);
+    console.error(error)
   }
 }
 
@@ -280,6 +279,7 @@ export async function deleteProduct(req: Request, res: Response) {
     res.json(product);
   } catch (error) {
     res.status(400).json(error);
+    
   }
 }
 
