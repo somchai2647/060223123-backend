@@ -13,6 +13,7 @@ export async function createProduct(req: Request, res: Response) {
       stock: Number(req.body.stock),
       stockAlm: Number(req.body.stockAlm),
       discount: Number(req.body.discount),
+      isRecommend: req.body.isRecommend,
       category: {
         connect: {
           id: req.body.category,
@@ -153,6 +154,7 @@ export async function updateProduct(req: Request, res: Response) {
         name: req.body.name,
         price: req.body.price,
         desc: req.body.description,
+        isRecommend: req.body.isRecommend,
         category: {
           connect: {
             id: req.body.category,
