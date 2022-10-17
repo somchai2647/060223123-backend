@@ -4,6 +4,12 @@ const prisma = new PrismaClient();
 
 export async function createProduct(req: Request, res: Response) {
   try {
+    const cover = { url: req.body.cover, type: "COVER" };
+    const images = req.body.imagebook.map(
+      (pic: Prisma.ImageBookCreateInput) => {
+        return { url: pic.url, type: "OTHER" };
+      }
+    );
     const productInput: Prisma.ProductsCreateInput = {
       name: req.body.name,
       desc: req.body.desc,
@@ -27,6 +33,11 @@ export async function createProduct(req: Request, res: Response) {
       publisher: {
         connect: {
           id: req.body.publisher,
+        },
+      },
+      image: {
+        createMany: {
+          data: [cover, ...images],
         },
       },
     };
@@ -53,6 +64,15 @@ export async function createProduct(req: Request, res: Response) {
             address: true,
           },
         },
+        image: {
+          orderBy: {
+            id: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
       },
     });
     res.json(product);
@@ -67,8 +87,12 @@ export async function getProducts(req: Request, res: Response) {
     const allBooks = await prisma.products.findMany({
       include: {
         image: {
+          orderBy: {
+            type: "asc",
+          },
           select: {
             url: true,
+            type: true,
           },
         },
         category: {
@@ -111,8 +135,12 @@ export async function getProduct(req: Request, res: Response) {
       },
       include: {
         image: {
+          orderBy: {
+            type: "asc",
+          },
           select: {
             url: true,
+            type: true,
           },
         },
         category: {

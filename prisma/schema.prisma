@@ -16,11 +16,6 @@ enum Role {
   ADMIN
 }
 
-enum TypeImg {
-  OTHER
-  COVER
-}
-
 model User {
   username  String   @unique
   fname     String
@@ -74,7 +69,7 @@ model Category {
 model ImageBook {
   id         String    @id @default(uuid())
   url        String
-  type       TypeImg
+  type       String    @default("OTHER")
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   Products   Products? @relation(fields: [productsId], references: [id])
