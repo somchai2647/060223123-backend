@@ -21,10 +21,21 @@ export async function createAuthor(req: Request, res: Response) {
 export async function getAuthors(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
-    
+
     const author = await prisma.author.findMany({
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(author);
@@ -42,7 +53,18 @@ export async function getAuthor(req: Request, res: Response) {
         id: String(req.params.id),
       },
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(author);
