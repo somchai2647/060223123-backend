@@ -25,7 +25,18 @@ export async function getPublishers(req: Request, res: Response) {
 
     const publisher = await prisma.publisher.findMany({
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(publisher);
@@ -43,7 +54,18 @@ export async function getPublisher(req: Request, res: Response) {
         id: String(req.params.id),
       },
       include: {
-        Products: withproduct === "1" ? true : false,
+        Products:
+          withproduct === "1"
+            ? {
+                include: {
+                  image: {
+                    select: {
+                      url: true,
+                    },
+                  },
+                },
+              }
+            : false,
       },
     });
     res.json(publisher);
