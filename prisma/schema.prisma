@@ -17,7 +17,7 @@ enum Role {
 }
 
 model User {
-  username  String   @unique
+  username  String   @id
   fname     String
   lname     String
   tel       String?
