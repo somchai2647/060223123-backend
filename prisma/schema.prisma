@@ -119,7 +119,7 @@ model Publisher {
 
 model Cart {
   id         String    @id @default(uuid())
-  amount     Int
+  quantity   Int       @default(1)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   Products   Products? @relation(fields: [productsId], references: [id])
