@@ -35,14 +35,15 @@ export async function register(req: Request, res: Response) {
       res.json(user);
     }
   } catch (error) {
+    
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         res.status(400).json({
           code: error.code,
-          error: "ชื่อผู้ใช้หรืออีเมลถูกใช้งานแล้ว",
+          message: "ชื่อผู้ใช้หรืออีเมลถูกใช้งานแล้ว",
         });
       }
-      res.status(400).json({ error });
+      // res.status(400).json({ error });
     }
   }
 }
@@ -68,7 +69,7 @@ export async function login(req: Request, res: Response) {
 
       res.json(user);
     } else {
-      res.status(400).json({ error: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" });
+      res.status(400).json({ message: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" });
     }
   } catch (error) {
     res.status(400).json({ error });
