@@ -35,7 +35,7 @@ model User {
 model Products {
   id          String      @id @default(uuid())
   name        String
-  desc        String
+  desc        String      @db.LongText
   amountpage  Int
   discount    Decimal     @db.Decimal(10, 2)
   price       Decimal     @db.Decimal(10, 2)
@@ -53,9 +53,9 @@ model Products {
   orderItemId String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  Cart        Cart[]
   isDelete    Boolean     @default(false)
   isRecommend Boolean     @default(false)
+  Cart        Cart[]
 }
 
 model Category {
@@ -68,7 +68,7 @@ model Category {
 
 model ImageBook {
   id         String    @id @default(uuid())
-  url        String
+  url        String    @db.LongText
   type       String    @default("OTHER")
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
