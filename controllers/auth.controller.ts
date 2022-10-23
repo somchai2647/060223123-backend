@@ -35,7 +35,6 @@ export async function register(req: Request, res: Response) {
       res.json(user);
     }
   } catch (error) {
-    
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         res.status(400).json({
@@ -75,4 +74,32 @@ export async function login(req: Request, res: Response) {
     res.status(400).json({ error });
   }
 }
-export default { login, register };
+
+export async function checktoken(req: Request, res: Response) {
+  const header = req.headers.authorization;
+  const token = header?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ msg: "No token, การอนุญาตถูกปฏิเสธ" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
+    if (decoded) {
+      const user = await prisma.user.findUnique({
+        where: {
+          //@ts-ignore
+          username: String(decoded.username),
+        },
+      });
+      //@ts-ignore
+      delete user.password;
+
+      res.json({ ...user });
+    }
+  } catch (error) {
+    res.status(401).json({ msg: "Token ไม่ถูกต้อง หรือ หมดอายุ" });
+  }
+}
+
+export default { login, register, checktoken };
