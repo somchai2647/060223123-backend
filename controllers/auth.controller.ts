@@ -80,7 +80,7 @@ export async function checktoken(req: Request, res: Response) {
   const token = header?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ msg: "No token, การอนุญาตถูกปฏิเสธ" });
+    return res.status(202).json(null);
   }
 
   try {
@@ -98,7 +98,7 @@ export async function checktoken(req: Request, res: Response) {
       res.json({ ...user });
     }
   } catch (error) {
-    res.status(401).json({ msg: "Token ไม่ถูกต้อง หรือ หมดอายุ" });
+    res.status(202).json(null);
   }
 }
 
