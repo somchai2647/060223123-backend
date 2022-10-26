@@ -67,3 +67,17 @@ export async function getCart(req: Request, res: Response) {
     res.status(400).json({ error: error.message });
   }
 }
+
+export async function deleteItem(req: Request, res: Response) {
+  try {
+    const cart = await prisma.cart.delete({
+      where: {
+        id: String(req.params.id),
+      },
+    });
+    res.json(cart);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
+  }
+}
