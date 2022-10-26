@@ -32,6 +32,10 @@ export async function getPublishers(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
@@ -61,6 +65,10 @@ export async function getPublisher(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
