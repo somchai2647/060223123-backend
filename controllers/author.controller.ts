@@ -31,6 +31,10 @@ export async function getAuthors(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
@@ -60,6 +64,10 @@ export async function getAuthor(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
