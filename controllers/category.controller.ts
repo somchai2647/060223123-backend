@@ -33,6 +33,10 @@ export async function getCategorys(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
@@ -62,6 +66,10 @@ export async function getCategory(req: Request, res: Response) {
                   image: {
                     select: {
                       url: true,
+                      type: true,
+                    },
+                    orderBy: {
+                      type: "asc",
                     },
                   },
                 },
