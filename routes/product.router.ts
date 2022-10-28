@@ -5,13 +5,15 @@ import {
   getProducts,
   updateProduct,
   deleteProduct,
-  destroyProduct
+  destroyProduct,
+  getProdctGroup
 } from "../controllers/product.controller";
 const router = Router();
 
 router.post("/createProduct", createProduct);
 router.get("/getProduct", getProducts);
 router.get("/getProduct/:id", getProduct);
+router.get("/getProdctGroup", getProdctGroup);
 router.put("/updateProduct/:id", updateProduct);
 router.delete("/deleteProduct/:id", deleteProduct);
 router.delete("/destroyProduct/:id", destroyProduct);

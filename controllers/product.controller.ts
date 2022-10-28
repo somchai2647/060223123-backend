@@ -171,6 +171,64 @@ export async function getProduct(req: Request, res: Response) {
   }
 }
 
+export async function getProdctGroup(req: Request, res: Response) {
+  try {
+    const { name, isrecommend, createdat } = req.query;
+    const products = await prisma.products.findMany({
+      where: {
+        isDelete: false,
+        OR: [
+          {
+            isRecommend: isrecommend === "true",
+          },
+          {
+            name: {
+              startsWith: name as string,
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: createdat as "asc" | "desc",
+      },
+      include: {
+        image: {
+          orderBy: {
+            type: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        publisher: {
+          select: {
+            id: true,
+            name: true,
+            address: true,
+          },
+        },
+      },
+    });
+    res.json(products);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
 export async function updateProduct(req: Request, res: Response) {
   try {
     const product = await prisma.products.update({
@@ -248,7 +306,7 @@ export async function updateProduct(req: Request, res: Response) {
     await prisma.imageBook.deleteMany({
       where: {
         // @ts-ignore
-        productsId: String(product.id),        
+        productsId: String(product.id),
       },
     });
     const images = await prisma.imageBook.createMany({
@@ -256,12 +314,12 @@ export async function updateProduct(req: Request, res: Response) {
       // @ts-ignore
       skipDuplicates: true,
     });
-    product.image = [coverNew, ...imagesNew]
+    product.image = [coverNew, ...imagesNew];
 
     res.json(product);
   } catch (error) {
     res.status(400).json(error);
-    console.error(error)
+    console.error(error);
   }
 }
 
@@ -279,7 +337,6 @@ export async function deleteProduct(req: Request, res: Response) {
     res.json(product);
   } catch (error) {
     res.status(400).json(error);
-    
   }
 }
 
