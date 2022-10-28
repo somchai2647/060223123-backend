@@ -61,6 +61,9 @@ export async function getCategory(req: Request, res: Response) {
             ? {
                 include: {
                   image: {
+                    orderBy: {
+                      type: "asc",
+                    },
                     select: {
                       url: true,
                       type: true,
