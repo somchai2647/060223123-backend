@@ -181,7 +181,7 @@ export async function updateProduct(req: Request, res: Response) {
       data: {
         name: req.body.name,
         price: req.body.price,
-        desc: req.body.description,
+        desc: req.body.desc,
         isRecommend: req.body.isRecommend,
         category: {
           connect: {
