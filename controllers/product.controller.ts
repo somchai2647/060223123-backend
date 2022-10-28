@@ -66,9 +66,10 @@ export async function createProduct(req: Request, res: Response) {
         },
         image: {
           orderBy: {
-            id: "asc",
+            type: "asc",
           },
           select: {
+            id: true,
             url: true,
             type: true,
           },
