@@ -191,6 +191,37 @@ export async function getProdctGroup(req: Request, res: Response) {
       orderBy: {
         createdAt: createdat as "asc" | "desc",
       },
+      include: {
+        image: {
+          orderBy: {
+            type: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        publisher: {
+          select: {
+            id: true,
+            name: true,
+            address: true,
+          },
+        },
+      },
     });
     res.json(products);
   } catch (error) {
