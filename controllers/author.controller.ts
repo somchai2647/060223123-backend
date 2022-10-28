@@ -35,6 +35,12 @@ export async function getAuthors(req: Request, res: Response) {
                     select: {
                       url: true,
                       type: true,
+<<<<<<< HEAD
+=======
+                    },
+                    orderBy: {
+                      type: "asc",
+>>>>>>> feature/cart
                     },
                   },
                 },
