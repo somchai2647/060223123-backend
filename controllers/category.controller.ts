@@ -55,6 +55,7 @@ export async function getCategorys(req: Request, res: Response) {
 export async function getCategory(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
+    const take = req.query.take;
     const category = await prisma.category.findUnique({
       where: {
         // @ts-ignore
@@ -64,6 +65,7 @@ export async function getCategory(req: Request, res: Response) {
         Products:
           withproduct === "1"
             ? {
+                take: take ? Number(take) : undefined,
                 include: {
                   image: {
                     orderBy: {
