@@ -13,7 +13,7 @@ export async function createAuthor(req: Request, res: Response) {
     });
     res.json(author);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }

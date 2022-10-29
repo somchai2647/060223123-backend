@@ -78,7 +78,7 @@ export async function createProduct(req: Request, res: Response) {
     });
     res.json(product);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }

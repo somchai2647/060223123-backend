@@ -14,7 +14,7 @@ export async function createPublisher(req: Request, res: Response) {
     });
     res.json(publisher);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }

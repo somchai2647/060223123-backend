@@ -12,7 +12,7 @@ export async function createCategory(req: Request, res: Response) {
     });
     res.json(category);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }
