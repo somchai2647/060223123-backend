@@ -174,8 +174,9 @@ export async function getProduct(req: Request, res: Response) {
 
 export async function getProdctGroup(req: Request, res: Response) {
   try {
-    const { name, isrecommend, createdat } = req.query;
+    const { name, isrecommend, createdat, take } = req.query;
     const products = await prisma.products.findMany({
+      take: Number(take || 5),
       where: {
         isDelete: false,
         OR: [

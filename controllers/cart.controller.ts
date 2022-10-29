@@ -52,6 +52,18 @@ export async function getCart(req: Request, res: Response) {
                 type: true,
               },
             },
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            author: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },
