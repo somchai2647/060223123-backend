@@ -21,7 +21,9 @@ export async function getCategorys(req: Request, res: Response) {
   try {
     const withproduct = req.query.withproduct;
     const order = req.query.order;
+    const take = req.query.take;
     const category = await prisma.category.findMany({
+      take: take ? Number(take) : undefined,
       orderBy: {
         name: order === "desc" ? "desc" : "asc",
       },
