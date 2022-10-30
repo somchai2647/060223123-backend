@@ -177,6 +177,9 @@ export async function searchProduct(req: Request, res: Response) {
     const keyword = req.query.keyword;
     const products = await prisma.products.findMany({
       take: keyword ? undefined : 10,
+      orderBy:{
+        createdAt: 'desc'
+      },
       where: {
         OR: [
           {
