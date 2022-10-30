@@ -172,6 +172,65 @@ export async function getProduct(req: Request, res: Response) {
   }
 }
 
+export async function searchProduct(req: Request, res: Response) {
+  try {
+    const keyword = req.query.keyword;
+    const products = await prisma.products.findMany({
+      take: keyword ? undefined : 10,
+      where: {
+        OR: [
+          {
+            name: {
+              contains: String(keyword),
+            },
+          },
+          {
+            author: {
+              name: {
+                contains: String(keyword),
+              },
+            },
+          },
+          {
+            category: {
+              name: {
+                contains: String(keyword),
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        image: {
+          orderBy: {
+            type: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    res.json(products);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
 export async function getProdctGroup(req: Request, res: Response) {
   try {
     const { name, isrecommend, createdat, take } = req.query;

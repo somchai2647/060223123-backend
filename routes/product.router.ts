@@ -6,13 +6,15 @@ import {
   updateProduct,
   deleteProduct,
   destroyProduct,
-  getProdctGroup
+  getProdctGroup,
+  searchProduct,
 } from "../controllers/product.controller";
 const router = Router();
 
 router.post("/createProduct", createProduct);
 router.get("/getProduct", getProducts);
 router.get("/getProduct/:id", getProduct);
+router.get("/searchProduct", searchProduct);
 router.get("/getProdctGroup", getProdctGroup);
 router.put("/updateProduct/:id", updateProduct);
 router.delete("/deleteProduct/:id", deleteProduct);
