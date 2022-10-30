@@ -174,13 +174,16 @@ export async function getProduct(req: Request, res: Response) {
 
 export async function searchProduct(req: Request, res: Response) {
   try {
-    const keyword = req.query.keyword;
+    const keyword = req.query.keyword || " ";
+    const isRecommend = req.query.isRecommend;
     const products = await prisma.products.findMany({
       take: keyword ? undefined : 10,
-      orderBy:{
-        createdAt: 'desc'
+      orderBy: {
+        createdAt: "desc",
       },
       where: {
+        isDelete: false,
+        isRecommend: isRecommend ? true : undefined,
         OR: [
           {
             name: {
