@@ -6,7 +6,7 @@ import author from "./author.router";
 import publisher from "./publisher.router";
 import user from "./user.router";
 import cart from "./cart.router";
-import checkout from "./checkout.router";
+import order from "./order.router";
 
 import verifyToken from "../middlewares/auth";
 
@@ -16,7 +16,7 @@ router.use("/auth", auth);
 router.use("/category", category);
 
 router.use("/cart", verifyToken, cart);
-router.use("/checkout", verifyToken, checkout);
+router.use("/order", verifyToken, order);
 router.use("/user", user);
 router.use("/product", product);
 router.use("/author", author);

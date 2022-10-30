@@ -97,3 +97,24 @@ export async function deleteItem(req: Request, res: Response) {
     res.status(400).json({ error });
   }
 }
+
+export async function clearCart(req: Request, res: Response) {
+  try {
+    const cart = await prisma.cart.deleteMany({
+      where: {
+        User: {
+          //@ts-ignore
+          username: req?.user?.username || "admin",
+        },
+      },
+    });
+    //@ts-ignore
+    if (req.isinside) {
+      return cart;
+    }
+    res.json(cart);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error });
+  }
+}

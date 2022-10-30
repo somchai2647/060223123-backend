@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCheckout } from "../controllers/checkout.controller";
+import { createCheckout } from "../controllers/order.controller";
 const router = Router();
 
 router.post("/createCheckout", createCheckout);

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client";
-import { getCart } from "./cart.controller";
+import { getCart, clearCart } from "./cart.controller";
 const prisma = new PrismaClient();
 
 export async function createCheckout(req: Request, res: Response) {
@@ -24,8 +24,11 @@ export async function createCheckout(req: Request, res: Response) {
       OrderItem: {
         //@ts-ignore
         create: cart.map((item: any) => {
-          const discount = (parseFloat(item.Products.discount) / 100) * parseFloat(item.Products.price);
-          const price = (parseFloat(item.Products.price) - discount) * item.quantity;
+          const discount =
+            (parseFloat(item.Products.discount) / 100) *
+            parseFloat(item.Products.price);
+          const price =
+            (parseFloat(item.Products.price) - discount) * item.quantity;
           return {
             quantity: item.quantity,
             price: price,
@@ -43,7 +46,9 @@ export async function createCheckout(req: Request, res: Response) {
       data: checkoutInput,
     });
 
+    clearCart(req, res);
     res.json(checkout);
+    
   } catch (error) {
     console.error(error);
     res.status(400).json(error);
