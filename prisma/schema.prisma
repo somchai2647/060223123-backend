@@ -50,7 +50,7 @@ model Products {
   publisher   Publisher?  @relation(fields: [publisherId], references: [id])
   publisherId String?
   image       ImageBook[]
-  OrderItem   OrderItem?  @relation(fields: [orderItemId], references: [id])
+  OrderItem   OrderItem[]
   orderItemId String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -82,6 +82,7 @@ model Order {
   status     String
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+  paymethod  String?
   productsId String?
   User       User?       @relation(fields: [userId], references: [username])
   userId     String?
@@ -89,13 +90,13 @@ model Order {
 }
 
 model OrderItem {
-  id         String     @id @default(uuid())
-  amount     Int
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  Order      Order?     @relation(fields: [orderId], references: [id])
+  id         String   @id @default(uuid())
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Order      Order?   @relation(fields: [orderId], references: [id])
   orderId    String?
-  Products   Products[]
+  Products   Products? @relation(fields: [productsId], references: [id])
   productsId String?
 }
 
