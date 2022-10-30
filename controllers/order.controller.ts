@@ -42,13 +42,22 @@ export async function createCheckout(req: Request, res: Response) {
       },
     };
 
+    await prisma.user.update({
+      where: {
+        //@ts-ignore
+        username: req.user.username,
+      },
+      data: {
+        address: req.body.address,
+      },
+    });
+
     const checkout = await prisma.order.create({
       data: checkoutInput,
     });
 
     clearCart(req, res);
     res.json(checkout);
-    
   } catch (error) {
     console.error(error);
     res.status(400).json(error);
