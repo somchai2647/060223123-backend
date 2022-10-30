@@ -78,7 +78,7 @@ export async function createProduct(req: Request, res: Response) {
     });
     res.json(product);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }
@@ -167,6 +167,71 @@ export async function getProduct(req: Request, res: Response) {
       },
     });
     res.json(product);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+export async function searchProduct(req: Request, res: Response) {
+  try {
+    const keyword = req.query.keyword || " ";
+    const isRecommend = req.query.isRecommend;
+    const products = await prisma.products.findMany({
+      take: keyword ? undefined : 10,
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        isDelete: false,
+        isRecommend: isRecommend ? true : undefined,
+        OR: [
+          {
+            name: {
+              contains: String(keyword),
+            },
+          },
+          {
+            author: {
+              name: {
+                contains: String(keyword),
+              },
+            },
+          },
+          {
+            category: {
+              name: {
+                contains: String(keyword),
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        image: {
+          orderBy: {
+            type: "asc",
+          },
+          select: {
+            url: true,
+            type: true,
+          },
+        },
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    res.json(products);
   } catch (error) {
     res.status(400).json(error);
   }

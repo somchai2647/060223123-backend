@@ -22,7 +22,7 @@ export async function createCart(req: Request, res: Response) {
     });
     res.json(cart);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }
@@ -74,7 +74,7 @@ export async function getCart(req: Request, res: Response) {
       res.json(cart);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     //@ts-ignore
     res.status(400).json({ error: error.message });
   }
@@ -89,7 +89,7 @@ export async function deleteItem(req: Request, res: Response) {
     });
     res.json(cart);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error });
   }
 }
