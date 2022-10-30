@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 export async function createCart(req: Request, res: Response) {
   try {
     const cartInput: Prisma.CartCreateInput = {
+      //@ts-ignore
       quantity: req.body.quantity,
       User: {
         connect: {
