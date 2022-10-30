@@ -35,12 +35,6 @@ export async function getCart(req: Request, res: Response) {
     }
     const cart = await prisma.cart.findMany({
       where: {
-        Products: {
-          isDelete: false,
-          stock: {
-            gt: 2,
-          },
-        },
         User: {
           //@ts-ignore
           username: req?.user?.username || "admin",
@@ -74,10 +68,14 @@ export async function getCart(req: Request, res: Response) {
         },
       },
     });
-    if (cart.length === 0) {
-      res.json([]);
-    } else {
+    //@ts-ignore
+    if (req.isinside) {
+      return cart;
+    }
+    if (cart.length !== 0) {
       res.json(cart);
+    } else {
+      res.json([]);
     }
   } catch (error) {
     console.error(error);
