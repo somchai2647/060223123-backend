@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { getProfile } from "../controllers/profile.controller";
+import { getProfile, updateProfile } from "../controllers/profile.controller";
 const router = Router();
 
 router.get("/getProfile", getProfile);
+router.put("/updateProfile", updateProfile);
 
 export default router;
