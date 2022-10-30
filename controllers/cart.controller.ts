@@ -68,10 +68,14 @@ export async function getCart(req: Request, res: Response) {
         },
       },
     });
-    if (cart.length === 0) {
-      res.json([]);
-    } else {
+    //@ts-ignore
+    if (req.isinside) {
+      return cart;
+    }
+    if (cart.length !== 0) {
       res.json(cart);
+    } else {
+      res.json([]);
     }
   } catch (error) {
     console.error(error);
@@ -87,6 +91,27 @@ export async function deleteItem(req: Request, res: Response) {
         id: String(req.params.id),
       },
     });
+    res.json(cart);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error });
+  }
+}
+
+export async function clearCart(req: Request, res: Response) {
+  try {
+    const cart = await prisma.cart.deleteMany({
+      where: {
+        User: {
+          //@ts-ignore
+          username: req?.user?.username || "admin",
+        },
+      },
+    });
+    //@ts-ignore
+    if (req.isinside) {
+      return cart;
+    }
     res.json(cart);
   } catch (error) {
     console.error(error);
