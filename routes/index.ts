@@ -18,7 +18,7 @@ router.use("/profile", verifyToken, profile);
 router.use("/category", category);
 
 router.use("/cart", verifyToken, cart);
-router.use("/order", verifyToken, order);
+router.use("/order", order);
 router.use("/user", user);
 router.use("/product", product);
 router.use("/author", author);
