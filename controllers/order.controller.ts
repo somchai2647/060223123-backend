@@ -105,3 +105,68 @@ export async function getOrders(req: Request, res: Response) {
     res.status(400).json(error);
   }
 }
+
+export async function updateOrder(req: Request, res: Response) {
+  try {
+    const order = await prisma.order.update({
+      where: {
+        id: String(req.params.id),
+      },
+      data: {
+        status: req.body.status,
+      },
+    });
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+}
+
+export async function getMyOrder(req: Request, res: Response) {
+  try {
+    const order = await prisma.order.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        User: {
+          //@ts-ignore
+          username: req.user.username,
+        },
+      },
+      include: {
+        User: {
+          select: {
+            fname: true,
+            lname: true,
+            email: true,
+            address: true,
+            tel: true,
+          },
+        },
+        OrderItem: {
+          include: {
+            Products: {
+              include: {
+                image: {
+                  select: {
+                    url: true,
+                    type: true,
+                  },
+                  orderBy: {
+                    type: "asc",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+}

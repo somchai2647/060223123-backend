@@ -85,7 +85,11 @@ export async function createProduct(req: Request, res: Response) {
 
 export async function getProducts(req: Request, res: Response) {
   try {
+    const orderby = req.query.orderby;
     const allBooks = await prisma.products.findMany({
+      orderBy: {
+        createdAt: orderby === "desc" ? "desc" : "asc",
+      },
       include: {
         image: {
           orderBy: {
