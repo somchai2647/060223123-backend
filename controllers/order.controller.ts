@@ -105,3 +105,20 @@ export async function getOrders(req: Request, res: Response) {
     res.status(400).json(error);
   }
 }
+
+export async function updateOrder(req: Request, res: Response) {
+  try {
+    const order = await prisma.order.update({
+      where: {
+        id: String(req.params.id),
+      },
+      data: {
+        status: req.body.status,
+      },
+    });
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+}
