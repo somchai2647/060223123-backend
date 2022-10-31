@@ -63,3 +63,45 @@ export async function createCheckout(req: Request, res: Response) {
     res.status(400).json(error);
   }
 }
+
+export async function getOrders(req: Request, res: Response) {
+  try {
+    const orders = await prisma.order.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        User: {
+          select: {
+            fname: true,
+            lname: true,
+            email: true,
+            address: true,
+            tel: true,
+          },
+        },
+        OrderItem: {
+          include: {
+            Products: {
+              include: {
+                image: {
+                  select: {
+                    url: true,
+                    type: true,
+                  },
+                  orderBy: {
+                    type: "asc",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+}
