@@ -83,7 +83,6 @@ export async function getOrders(req: Request, res: Response) {
         OrderItem: {
           include: {
             Products: {
-          
               include: {
                 image: {
                   select: {
