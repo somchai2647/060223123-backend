@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function createPreview(req: Request, res: Response) {
+export async function createReview(req: Request, res: Response) {
   try {
     const reviewInput: Prisma.ReviewCreateInput = {
       User: {
@@ -13,10 +13,10 @@ export async function createPreview(req: Request, res: Response) {
       },
       Products: {
         connect: {
-          id: req.body.id,
+          id: req.body.proid,
         },
       },
-      rating: req.body.rating,
+      rating: Number(req.body.rating),
       comment: req.body.comment,
     };
     const review = await prisma.review.create({
@@ -25,7 +25,8 @@ export async function createPreview(req: Request, res: Response) {
 
     res.json(review);
   } catch (error) {
-    res.status(400).json(error);
+    console.log(error);
+    res.status(400).json({ error });
   }
 }
 
@@ -69,6 +70,36 @@ export async function getReviewProducts(req: Request, res: Response) {
         },
       },
     });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+export async function updateReview(req: Request, res: Response) {
+  try {
+    const review = await prisma.review.update({
+      where: {
+        id: String(req.params.id),
+      },
+      data: {
+        rating: Number(req.body.rating),
+        comment: req.body.comment,
+      },
+    });
+    res.json(review);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+export async function destroyReview(req: Request, res: Response) {
+  try {
+    const review = prisma.review.delete({
+      where: {
+        id: String(req.params.id),
+      },
+    });
+    res.json(review);
   } catch (error) {
     res.status(400).json(error);
   }

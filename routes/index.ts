@@ -8,6 +8,7 @@ import user from "./user.router";
 import cart from "./cart.router";
 import order from "./order.router";
 import profile from "./profile.router";
+import review from './review.router'
 
 import verifyToken from "../middlewares/auth";
 
@@ -19,6 +20,7 @@ router.use("/category", category);
 
 router.use("/cart", verifyToken, cart);
 router.use("/order", order);
+router.use("/review", review);
 router.use("/user", user);
 router.use("/product", product);
 router.use("/author", author);

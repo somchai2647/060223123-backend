@@ -2,13 +2,17 @@ import { Router } from "express";
 import {
   createReview,
   getReviewProducts,
+  updateReview,
   getReviews,
-  destroyReview
+  destroyReview,
 } from "../controllers/review.controller";
 const router = Router();
+import verifyToken from "../middlewares/auth";
 
-router.post("/createRreview", createReview);
+router.get("/getReviews", getReviews);
+router.put("/updateReview/:id", updateReview);
+router.delete("/destroyReview/:id", destroyReview);
 router.get("/getReviewProducts", getReviewProducts);
-router.delete("/destroyReview/:", getReviews);
+router.post("/createReview", verifyToken, createReview);
 
 export default router;
