@@ -19,11 +19,11 @@ export async function createReview(req: Request, res: Response) {
       rating: Number(req.body.rating),
       comment: req.body.comment,
     };
-    const review = await prisma.review.create({
+    const reviews = await prisma.review.create({
       data: reviewInput,
     });
 
-    res.json(review);
+    res.json(reviews);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });
@@ -53,7 +53,7 @@ export async function getReviews(req: Request, res: Response) {
 
 export async function getReviewProducts(req: Request, res: Response) {
   try {
-    const review = await prisma.review.findMany({
+    const reviews = await prisma.review.findMany({
       orderBy: {
         createdAt: "desc",
       },
@@ -70,7 +70,7 @@ export async function getReviewProducts(req: Request, res: Response) {
         },
       },
     });
-    res.json(review);
+    res.json(reviews);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -78,7 +78,7 @@ export async function getReviewProducts(req: Request, res: Response) {
 
 export async function updateReview(req: Request, res: Response) {
   try {
-    const review = await prisma.review.update({
+    const reviews = await prisma.review.update({
       where: {
         id: String(req.params.id),
       },
@@ -87,7 +87,7 @@ export async function updateReview(req: Request, res: Response) {
         comment: req.body.comment,
       },
     });
-    res.json(review);
+    res.json(reviews);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -95,12 +95,12 @@ export async function updateReview(req: Request, res: Response) {
 
 export async function destroyReview(req: Request, res: Response) {
   try {
-    const review = await prisma.review.delete({
+    const reviews = await prisma.review.delete({
       where: {
         id: String(req.params.id),
       },
     });
-    res.json(review);
+    res.json(reviews);
 
   } catch (error) {
     console.error(error)
