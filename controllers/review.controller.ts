@@ -70,6 +70,7 @@ export async function getReviewProducts(req: Request, res: Response) {
         },
       },
     });
+    res.json(review);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -94,13 +95,15 @@ export async function updateReview(req: Request, res: Response) {
 
 export async function destroyReview(req: Request, res: Response) {
   try {
-    const review = prisma.review.delete({
+    const review = await prisma.review.delete({
       where: {
         id: String(req.params.id),
       },
     });
     res.json(review);
+
   } catch (error) {
+    console.error(error)
     res.status(400).json(error);
   }
 }
