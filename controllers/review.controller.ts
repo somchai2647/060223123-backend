@@ -8,12 +8,12 @@ export async function createReview(req: Request, res: Response) {
       User: {
         connect: {
           //@ts-ignore
-          username: req.user.username,
+          username: String(req.user.username),
         },
       },
       Products: {
         connect: {
-          id: req.body.proid,
+          id: String(req.body.proid),
         },
       },
       rating: Number(req.body.rating),

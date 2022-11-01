@@ -74,7 +74,6 @@ export async function login(req: Request, res: Response) {
     res.status(400).json({ error });
   }
 }
-
 export async function checktoken(req: Request, res: Response) {
   const header = req.headers.authorization;
   const token = header?.split(" ")[1];
@@ -101,5 +100,23 @@ export async function checktoken(req: Request, res: Response) {
     res.status(202).json(null);
   }
 }
+export async function changePassword(req: Request, res: Response) {
+  const { username, password } = req.body;
+  try {
+    const encryptedPassword = await bcryptjs.hash(password, 10);
+    const user = await prisma.user.update({
+      where: {
+        username,
+      },
+      data: {
+        password: encryptedPassword,
+      },
+    });
 
-export default { login, register, checktoken };
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
+export default { login, register, checktoken, changePassword };
