@@ -31,6 +31,7 @@ model User {
   role      Role     @default(USER)
   Order     Order[]
   Cart      Cart[]
+  Review    Review[]
 }
 
 model Products {
@@ -57,6 +58,7 @@ model Products {
   isDelete    Boolean     @default(false)
   isRecommend Boolean     @default(false)
   Cart        Cart[]
+  Review      Review[]
 }
 
 model Category {
@@ -78,26 +80,38 @@ model ImageBook {
 }
 
 model Order {
-  id         String      @id @default(uuid())
-  status     String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  paymethod  String?
-  User       User?       @relation(fields: [userId], references: [username])
-  userId     String?
-  OrderItem  OrderItem[]
+  id        String      @id @default(uuid())
+  status    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  paymethod String?
+  User      User?       @relation(fields: [userId], references: [username])
+  userId    String?
+  OrderItem OrderItem[]
 }
 
 model OrderItem {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   quantity   Int
-  price      Decimal  @db.Decimal(10, 2)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  Order      Order?   @relation(fields: [orderId], references: [id])
+  price      Decimal   @db.Decimal(10, 2)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Order      Order?    @relation(fields: [orderId], references: [id])
   orderId    String?
   Products   Products? @relation(fields: [productsId], references: [id])
   productsId String?
+}
+
+model Review {
+  id         String    @id @default(uuid())
+  comment    String    @db.LongText
+  rating     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?
+  User       User?     @relation(fields: [userId], references: [username])
+  userId     String?
 }
 
 model Author {
